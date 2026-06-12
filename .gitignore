@@ -11,6 +11,8 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+Thumbs.db
+Desktop.ini
 
 # IntelliJ related
 *.iml
@@ -18,10 +20,8 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -44,11 +44,119 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# iOS build artifacts
+/ios/Pods/
+/ios/.symlinks/
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Flutter.podspec
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/ephemeral/
+/ios/Flutter/app.flx
+/ios/Flutter/app.zip
+/ios/Flutter/flutter_assets/
+/ios/Flutter/flutter_export_environment.sh
+/ios/ServiceDefinitions.json
+
+# macOS build artifacts
+/macos/Pods/
+/macos/Flutter/Generated.xcconfig
+/macos/Flutter/ephemeral/
+/macos/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+/macos/Flutter/flutter_export_environment.sh
+
+# Linux build artifacts
+/linux/flutter/ephemeral/
+
+# Windows build artifacts
+/windows/flutter/ephemeral/
+/windows/flutter/flutter_export_environment.bat
+
+# Web build artifacts
+/web/favicon.png
+/web/icons/
+
 # Environment variables
 .env
 .env.local
+.env.development
 .env.production
+.env.staging
 
 # API Keys (keep these secret!)
 *.key
 *.pem
+*.p12
+*.jks
+
+# Build outputs
+*.apk
+*.aab
+*.ipa
+*.app
+*.dmg
+*.exe
+*.msi
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.*.swp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node modules (if using web)
+node_modules/
+
+# Firebase (if using)
+google-services.json
+GoogleService-Info.plist
+
+# FVM (Flutter Version Management)
+.fvm/
+.fvmrc
+
+# Fastlane (if using)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Documentation build artifacts
+docs/api/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+
+# Test coverage
+coverage/
+*.lcov
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Local configuration
+local.properties
+*.local.json
+
+# Backup files
+*.bak
+*.backup
+*~
