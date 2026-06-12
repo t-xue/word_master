@@ -1,5 +1,20 @@
 # 单词小达人 - 儿童英语学习App
 
+<div align="center">
+
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Platform](https://img.shields.io/badge/Platform-Android-lightgrey)
+
+**一款专为儿童设计的英语单词学习应用** 🎓
+
+[功能特性](#-核心功能) • [快速开始](#-快速开始) • [项目结构](#-项目结构) • [贡献指南](#-贡献)
+
+</div>
+
+---
+
 ## 📱 应用简介
 
 **单词小达人**是一款专为6-12岁儿童设计的英语单词学习应用，采用可爱卡通风格，让学习变得有趣！
@@ -174,21 +189,40 @@ flutter build apk --release
 
 ## 📚 相关文档
 
-- `BUILD_APK_README.md` - APK 构建指南
-- `INSTALL_ANDROID_SDK.md` - Android SDK 安装指南
-- `TEST_REPORT.md` - 测试报告
+- [CHANGELOG.md](CHANGELOG.md) - 更新日志
+- [CONTRIBUTING.md](CONTRIBUTING.md) - 贡献指南
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) - 行为准则
+- [BUILD_APK_README.md](BUILD_APK_README.md) - APK 构建指南
+- [INSTALL_ANDROID_SDK.md](INSTALL_ANDROID_SDK.md) - Android SDK 安装指南
+- [TEST_REPORT.md](TEST_REPORT.md) - 测试报告
 
 ---
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request！
+欢迎贡献代码！请阅读 [贡献指南](CONTRIBUTING.md) 了解详情。
+
+### 贡献方式
+
+- 🐛 报告 Bug
+- 💡 提出新功能建议
+- 📝 改进文档
+- 🔧 提交代码修复
+- 🌟 添加新功能
+
+### 快速贡献
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'feat: Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
 
 ---
 
 ## 📄 许可证
 
-本项目仅供学习使用。
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
 
 ---
 

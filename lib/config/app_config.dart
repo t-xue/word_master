@@ -8,7 +8,7 @@ class AppConfig {
   
   static String ttsApiKey = const String.fromEnvironment(
     'TTS_API_KEY',
-    defaultValue: 'tp-cik958hudnnfsami2gf1u3q5rxp1k1y4i85me7m5jprioob0',
+    defaultValue: '', // 请在环境变量中设置您的 API Key
   );
   
   static String ttsModel = const String.fromEnvironment(
