@@ -8,6 +8,7 @@ import 'screens/practice_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/vocabulary_screen.dart';
 import 'screens/achievements_screen.dart';
+import 'screens/settings_screen.dart';
 
 // 路由配置
 final GoRouter _router = GoRouter(
@@ -59,6 +60,10 @@ final GoRouter _router = GoRouter(
       path: '/achievements',
       builder: (context, state) => const AchievementsScreen(),
     ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
+    ),
   ],
 );
 
@@ -85,7 +90,7 @@ class WordMasterApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.background,
         
         // 卡片主题
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: AppColors.cardBg,
           elevation: 4,
           shape: RoundedRectangleBorder(

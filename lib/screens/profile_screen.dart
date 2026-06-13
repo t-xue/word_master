@@ -427,7 +427,16 @@ class ProfileScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.edit, color: AppColors.primary),
+              leading: const Icon(Icons.settings, color: AppColors.primary),
+              title: const Text('API 设置'),
+              subtitle: const Text('配置 TTS 发音服务'),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/settings');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit, color: AppColors.secondary),
               title: const Text('修改名字'),
               onTap: () {
                 Navigator.pop(context);

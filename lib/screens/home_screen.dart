@@ -22,6 +22,48 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     _loadDailyWords();
+    _checkApiKey();
+  }
+
+  void _checkApiKey() {
+    // 延迟检查，避免在 build 过程中显示对话框
+    Future.microtask(() {
+      if (!AppConfig.isApiKeyConfigured()) {
+        _showApiKeyTip();
+      }
+    });
+  }
+
+  void _showApiKeyTip() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Text('🔑', style: TextStyle(fontSize: 24)),
+            const SizedBox(width: 8),
+            Text('配置 API Key'),
+          ],
+        ),
+        content: Text(
+          '检测到您还未配置 TTS API Key，发音功能将无法使用。\n\n'
+          '是否现在配置？',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('稍后'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.push('/settings');
+            },
+            child: Text('去配置'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _loadDailyWords() async {
@@ -99,13 +141,66 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             color: AppColors.textLight,
                           ),
                         ),
-                        Text(
-                          userProgress.userName,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.text,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              userProgress.userName,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.text,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // API 状态指示器
+                            GestureDetector(
+                              onTap: () => context.push('/settings'),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppConfig.isApiKeyConfigured()
+                                      ? AppColors.success.withOpacity(0.1)
+                                      : AppColors.accent.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppConfig.isApiKeyConfigured()
+                                        ? AppColors.success
+                                        : AppColors.accent,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      AppConfig.isApiKeyConfigured()
+                                          ? Icons.check_circle
+                                          : Icons.warning,
+                                      size: 14,
+                                      color: AppConfig.isApiKeyConfigured()
+                                          ? AppColors.success
+                                          : AppColors.accent,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      AppConfig.isApiKeyConfigured()
+                                          ? 'API 已配置'
+                                          : 'API 未配置',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: AppConfig.isApiKeyConfigured()
+                                            ? AppColors.success
+                                            : AppColors.accent,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
