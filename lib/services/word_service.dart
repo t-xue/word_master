@@ -43,6 +43,24 @@ class WordService {
     } catch (e) {
       // 加载失败时使用内置数据
       _allWords = _getDefaultWords();
+
+      // 初始化分类和年级映射
+      _wordsByCategory = {};
+      for (final word in _allWords!) {
+        if (!_wordsByCategory!.containsKey(word.category)) {
+          _wordsByCategory![word.category] = [];
+        }
+        _wordsByCategory![word.category]!.add(word);
+      }
+
+      _wordsByGrade = {};
+      for (final word in _allWords!) {
+        if (!_wordsByGrade!.containsKey(word.gradeLevel)) {
+          _wordsByGrade![word.gradeLevel] = [];
+        }
+        _wordsByGrade![word.gradeLevel]!.add(word);
+      }
+
       _isLoaded = true;
     }
   }

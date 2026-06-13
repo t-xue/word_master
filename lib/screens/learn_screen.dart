@@ -57,7 +57,79 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
   }
 
   void _playSound(String text) {
-    _ttsService.speak(text);
+    // 检查 API Key 是否已配置
+    if (!AppConfig.isApiKeyConfigured()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('请先在设置中配置 API Key'),
+          action: SnackBarAction(
+            label: '去配置',
+            onPressed: () => context.push('/settings'),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return;
+    }
+
+    // 播放发音
+    _ttsService.speak(text).catchError((error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('发音失败，请检查网络或 API 配置'),
+            backgroundColor: AppColors.accent,
+          ),
+        );
+      }
+    });
+  }
+
+  Widget _buildSoundButton({
+    required VoidCallback onTap,
+    required String icon,
+    required String label,
+    required List<Color> gradient,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: gradient,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: gradient[0].withOpacity(0.4),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(icon, style: const TextStyle(fontSize: 28)),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: AppColors.textLight,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _nextWord(bool known) async {
@@ -301,38 +373,20 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              GestureDetector(
+                              // 单词发音按钮
+                              _buildSoundButton(
                                 onTap: () => _playSound(currentWord.english),
-                                child: Container(
-                                  width: 55,
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      colors: [AppColors.secondary, AppColors.primaryLight],
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Text('🔊', style: TextStyle(fontSize: 24)),
-                                  ),
-                                ),
+                                icon: '🗣️',
+                                label: '单词',
+                                gradient: [AppColors.secondary, AppColors.primaryLight],
                               ),
-                              const SizedBox(width: 12),
-                              GestureDetector(
+                              const SizedBox(width: 16),
+                              // 例句发音按钮
+                              _buildSoundButton(
                                 onTap: () => _playSound(currentWord.exampleEn),
-                                child: Container(
-                                  width: 55,
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      colors: [AppColors.accent, AppColors.primary],
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Text('🎤', style: TextStyle(fontSize: 24)),
-                                  ),
-                                ),
+                                icon: '📖',
+                                label: '例句',
+                                gradient: [AppColors.accent, AppColors.primary],
                               ),
                             ],
                           ),

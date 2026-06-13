@@ -146,7 +146,32 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
   }
 
   void _playSound(String text) {
-    _ttsService.speak(text);
+    // 检查 API Key 是否已配置
+    if (!AppConfig.isApiKeyConfigured()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('请先在设置中配置 API Key'),
+          action: SnackBarAction(
+            label: '去配置',
+            onPressed: () => context.push('/settings'),
+          ),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return;
+    }
+
+    // 播放发音
+    _ttsService.speak(text).catchError((error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('发音失败，请检查网络或 API 配置'),
+            backgroundColor: AppColors.accent,
+          ),
+        );
+      }
+    });
   }
 
   void _handleFlashcardAnswer(bool known) {
@@ -612,34 +637,39 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           const SizedBox(height: 25),
 
           // 发音按钮
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => _playSound(word.english),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryLight,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('🔊', style: TextStyle(fontSize: 18)),
-                      const SizedBox(width: 6),
-                      Text(
-                        '发音',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.text,
-                        ),
-                      ),
-                    ],
-                  ),
+          GestureDetector(
+            onTap: () => _playSound(word.english),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [AppColors.secondaryLight, AppColors.secondary],
                 ),
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.secondary.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ],
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('🗣️', style: TextStyle(fontSize: 20)),
+                  const SizedBox(width: 8),
+                  Text(
+                    '点击发音',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.text,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -751,22 +781,28 @@ class _PracticeScreenState extends ConsumerState<PracticeScreen> {
           GestureDetector(
             onTap: () => _playSound(word.exampleEn),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [AppColors.accent.withOpacity(0.1), AppColors.accent.withOpacity(0.2)],
+                ),
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: AppColors.accent.withOpacity(0.3),
+                  width: 1.5,
+                ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('🎤', style: TextStyle(fontSize: 18)),
-                  const SizedBox(width: 6),
+                  Text('📖', style: TextStyle(fontSize: 20)),
+                  const SizedBox(width: 8),
                   Text(
                     '播放例句',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                       color: AppColors.accent,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
