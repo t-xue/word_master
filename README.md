@@ -226,14 +226,6 @@ flutter build apk --release
 
 ---
 
-## 🙏 致谢
-
-- Flutter 团队提供的优秀框架
-- 所有开源库的贡献者
-- 小米 mimo-v2.5-tts 提供的语音服务
-
----
-
 ## 📞 联系方式
 
 如有问题或建议，请通过 GitHub Issues 反馈。
