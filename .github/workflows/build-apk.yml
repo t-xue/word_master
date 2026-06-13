@@ -1,48 +1,44 @@
-# GitHub Actions workflow to build Android APK
-# Uses Flutter 3.22.0 for better Gradle compatibility
-
 name: Build Android APK
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Java JDK 17
+    - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
         distribution: 'temurin'
+        java-version: '17'
 
-    - name: Setup Flutter 3.22.0
+    - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.22.0'
+        flutter-version: '3.19.0'
         channel: 'stable'
-        cache: true
 
-    - name: Flutter doctor
-      run: flutter doctor -v
+    - name: Flutter info
+      run: flutter --version
 
     - name: Get dependencies
       run: flutter pub get
 
     - name: Build APK
-      run: flutter build apk --release --no-tree-shake-icons
+      run: flutter build apk --release
 
-    - name: Upload APK artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: word-master-apk
+        name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
-        retention-days: 90
