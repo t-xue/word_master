@@ -66,7 +66,7 @@ flutter clean && flutter pub get
 
 ### Gradle Configuration
 - Gradle 8.4, AGP 8.1.0, Kotlin 1.7.10
-- `versionCode()` and `versionName()` require function call syntax
+- `versionCode` and `versionName` are properties (not functions)
 - Use standard Maven repositories (Google, Maven Central)
 
 ### API Key Management
@@ -118,11 +118,11 @@ flutter clean && flutter pub get
 cardTheme: CardTheme(...)
 ```
 
-### Gradle versionCode Error
+### Gradle versionCode
 ```kotlin
-// Use function call syntax
-versionCode = flutter.versionCode()
-versionName = flutter.versionName()
+// These are properties, not functions
+versionCode = flutter.versionCode
+versionName = flutter.versionName
 ```
 
 ### Missing Kotlin Plugin
