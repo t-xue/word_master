@@ -110,26 +110,59 @@ flutter clean && flutter pub get
 1. Add words to `data/vocabulary.json`
 2. Add category to `_categories` list in `vocabulary_screen.dart`
 
-## Build Issues & Solutions
+## Build Issues & Solutions (CRITICAL - READ BEFORE MODIFYING ANDROID CONFIG)
 
 ### CardThemeData Error
 ```dart
-// Use CardTheme (not CardThemeData)
+// WRONG - CardThemeData doesn't exist in Flutter 3.24.5
+cardTheme: CardThemeData(...)
+
+// CORRECT - Use CardTheme (works in all Flutter 3.x versions)
 cardTheme: CardTheme(...)
 ```
 
-### Gradle versionCode
+### Gradle versionCode and versionName
 ```kotlin
-// These are properties, not functions
+// WRONG - These are properties, not functions
+versionCode = flutter.versionCode()
+versionName = flutter.versionName()
+
+// CORRECT - Direct property access
 versionCode = flutter.versionCode
 versionName = flutter.versionName
 ```
 
-### Missing Kotlin Plugin
-Use stable versions: Kotlin 1.7.10, AGP 8.1.0
+### Kotlin and AGP Versions
+```kotlin
+// USE THESE STABLE VERSIONS (tested with Flutter 3.24.5)
+id("com.android.application") version "8.1.0" apply false
+id("org.jetbrains.kotlin.android") version "1.7.10" apply false
+```
 
 ### Adaptive Icon Issues
-Standard mipmap icons work reliably. Avoid `mipmap-anydpi-v26` without proper foreground assets.
+- DO NOT create `mipmap-anydpi-v26/ic_launcher.xml` unless you have proper foreground assets
+- Standard mipmap icons (`ic_launcher.png` in each density folder) work reliably
+- Missing foreground assets will cause build failure
+
+### Maven Repositories
+```kotlin
+// USE STANDARD REPOSITORIES (avoid Chinese mirrors in CI)
+repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+}
+```
+
+### GitHub Actions Flutter Version
+```yaml
+# USE 3.24.5 for CI builds (CardTheme compatible)
+- name: Setup Flutter
+  uses: subosito/flutter-action@v2
+  with:
+    flutter-version: '3.24.5'
+    channel: 'stable'
+```
 
 ## Testing
 
