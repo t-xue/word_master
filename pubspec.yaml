@@ -9,23 +9,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   # 状态管理
   flutter_riverpod: ^2.4.9
-  
+
   # 路由
   go_router: ^13.0.0
-  
+
   # 本地存储
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  
+
   # 网络请求
   http: ^1.1.0
-  
+
   # 音频播放
   audioplayers: ^5.2.0
-  
+
+  # 本地TTS（设备自带语音合成）
+  flutter_tts: ^3.8.3
+
   # 工具
   path_provider: ^2.1.1
   shared_preferences: ^2.2.2

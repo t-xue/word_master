@@ -57,27 +57,12 @@ class _LearnScreenState extends ConsumerState<LearnScreen> {
   }
 
   void _playSound(String text) {
-    // 检查 API Key 是否已配置
-    if (!AppConfig.isApiKeyConfigured()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('请先在设置中配置 API Key'),
-          action: SnackBarAction(
-            label: '去配置',
-            onPressed: () => context.push('/settings'),
-          ),
-          duration: Duration(seconds: 3),
-        ),
-      );
-      return;
-    }
-
-    // 播放发音
+    // 播放发音（支持本地TTS和远程API）
     _ttsService.speak(text).catchError((error) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('发音失败，请检查网络或 API 配置'),
+            content: Text('发音失败，请重试'),
             backgroundColor: AppColors.accent,
           ),
         );

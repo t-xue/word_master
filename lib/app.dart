@@ -90,7 +90,7 @@ class WordMasterApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.background,
         
         // 卡片主题
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: AppColors.cardBg,
           elevation: 4,
           shape: RoundedRectangleBorder(
